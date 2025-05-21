@@ -122,5 +122,23 @@ img{
     color:#FFF;
     border-radius:50px;
     text-align:center;
-    box-shadow: 2px 2px 3px #999;  
+    box-shadow: 2px 2px 3px #999;
+}
+
+.page_content{
+  display: flex;  
+  flex-direction: column;
+  margin-left:5%;
+  margin-right:5%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+
+.banner_image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    max-width: 100%;
+    height: auto;
 }
