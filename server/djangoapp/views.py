@@ -1,5 +1,3 @@
-# Uncomment the required imports before adding the code
-
 # from django.shortcuts import render
 # from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
@@ -22,7 +20,32 @@ from .restapis import get_request, analyze_review_sentiments, post_review
 logger = logging.getLogger(__name__)
 
 
-# Create your views here.
+# Module import
+from .restapis import get_request, analyze_review_sentiments, post_review, searchcars_request
+
+# Code for the view
+def get_inventory(request, dealer_id):
+    data = request.GET
+    if (dealer_id):
+        if 'year' in data:
+            endpoint = "/carsbyyear/"+str(dealer_id)+"/"+data['year']
+        elif 'make' in data:
+            endpoint = "/carsbymake/"+str(dealer_id)+"/"+data['make']
+        elif 'model' in data:
+            endpoint = "/carsbymodel/"+str(dealer_id)+"/"+data['model']
+        elif 'mileage' in data:
+            endpoint = "/carsbymaxmileage/"+str(dealer_id)+"/"+data['mileage']
+        elif 'price' in data:
+            endpoint = "/carsbyprice/"+str(dealer_id)+"/"+data['price']
+        else:
+            endpoint = "/cars/"+str(dealer_id)
+ 
+        cars = searchcars_request(endpoint)
+        return JsonResponse({"status": 200, "cars": cars})
+    else:
+        return JsonResponse({"status": 400, "message": "Bad Request"})
+    return JsonResponse({"status": 400, "message": "Bad Request"})
+    
 
 # Create a `login_request` view to handle sign in request
 @csrf_exempt
